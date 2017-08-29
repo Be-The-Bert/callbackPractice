@@ -21,11 +21,11 @@ and what you should write is the sayHi function that makes the code above work,
 
 
 // 1. Write a function called first that returns the first item of the array using a callback function
-function first(arr, fn){
-  fn(arr[0]);
-}
-  // Code Here
 
+  // Code Here
+function first(array, cbFunc) {
+  cbFunc(array[0]);
+}
   
 var names = ['Tyler', 'Cahlan', 'Ryan', 'Colt', 'Tyler', 'Blaine', 'Cahlan'];
 first(names, function(firstName){
@@ -35,10 +35,11 @@ first(names, function(firstName){
 
 
 // 2. Write a function called last which returns the last item of the array using a callback function.
-function last(arr, fn) {
-  fn(arr[arr.length - 1]);
-}
+
   //Code Here
+function last(array, cbFunc) {
+  cbFunc(array[array.length - 1]);
+}
 
 last(names, function(lastName){
   console.log('The last name in names is ' + lastName);
@@ -47,11 +48,11 @@ last(names, function(lastName){
 
 
 // 3. Write a function called multiply that multiplies two numbers using a callback function.
-function multiply(num1, num2, fn) {
-  fn(num1 * num2);
-}
-  //Code Here
 
+  //Code Here
+function multiply(num1, num2, cbFunc) {
+  cbFunc(num1 * num2);
+}
 
 multiply(4, 3, function(answer){
   console.log('The answer is ' + answer); //should console.log 12
@@ -61,16 +62,12 @@ multiply(4, 3, function(answer){
 
 // 4. Write a function called contains that checks if a name exists in an array. 
 // If it does, return true using the callback, if not return false.
-function contains(arr, name, fn) {
-  var result = false;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === name) {
-      result = true;
-    }
-  }
-  fn(result);
-}
+
   //Code Here 
+function contains(array, name, cbFunc) {
+  let filteredNames = array.filter(person => person === name)
+  filteredNames.length ? cbFunc(true) : cbFunc(false)
+}
 
 contains(names, 'Colt', function(result){
   if(result === true){
@@ -84,36 +81,26 @@ contains(names, 'Colt', function(result){
 
 // 5. Write a function called uniq that takes the names array and removes all duplicates and returns 
 // the callback function with the array of unique names.
-function uniq(arr, fn) {
-  arr.sort();
-  var newArr = [];
-  newArr[0] = arr[0];
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] !== arr[i - 1]) {
-      newArr.push(arr[i]);
-    }
-  }
-  fn(newArr);
-}
+
     //Code Here
+function uniq(names, cbFunc) {
+  let uniqNames = [...new Set(names)];
+  cbFunc(uniqNames);
+}
+
 
 uniq(names, function(uniqArr){
   console.log('The new names array with all the duplicate items removed is ', uniqArr);
 });
 
 
-
 // 6. Write a function called each that takes in an array of names. For each item, use a callback 
 // function to return the indices and item.
-function each(arr, fn) {
-  for (let i = 0; i < arr.length; i++) {
-    fn(arr[i], i);
-  }
-}
-
-
 
     //Code Here 
+function each(names, cbFunc) {
+  names.forEach((i, name) => cbFunc(i, name));
+}
 
 each(names, function(item, indice){
   console.log('The item in the ' + indice + ' position is ' + item)
@@ -123,15 +110,13 @@ each(names, function(item, indice){
 
 // 7. Write a function called getUserById that looks at the array of user objects (users) and searches for a user by ID 
 // and returns that user.
-function getUserById(userArr, idNum, fn) {
-    for (let i = 0; i < userArr.length; i++) {
-      if (userArr[i].id === idNum) {
-        fn(userArr[i]);
-      }
-    }
-    
-}
+
  //Code Here
+function getUserById(users, id, cbFunc) {
+  let user = users.filter(person => person.id === id);
+  user.length ? cbFunc(user[0]) : console.log('oops, no user with that id');
+}
+
 
 var users = [
   {
