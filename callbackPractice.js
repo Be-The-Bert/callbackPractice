@@ -65,8 +65,12 @@ multiply(4, 3, function(answer){
 
   //Code Here 
 function contains(array, name, cbFunc) {
-  let filteredNames = array.filter(person => person === name)
-  filteredNames.length ? cbFunc(true) : cbFunc(false)
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === name) {
+      cbFunc(true);
+    }
+  }
+  cbFunc(false);
 }
 
 contains(names, 'Colt', function(result){
@@ -84,8 +88,16 @@ contains(names, 'Colt', function(result){
 
     //Code Here
 function uniq(names, cbFunc) {
-  let uniqNames = [...new Set(names)];
-  cbFunc(uniqNames);
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < names.length; j++) {
+      if (names[i] === names[j] && i !== j) {
+        names.splice(j, 1);
+        i--;
+        j--;
+      }
+    }
+  }
+  cbFunc(names);
 }
 
 
@@ -99,7 +111,9 @@ uniq(names, function(uniqArr){
 
     //Code Here 
 function each(names, cbFunc) {
-  names.forEach((i, name) => cbFunc(i, name));
+  for (let i = 0; i < names.length; i++) {
+    cbFunc(names[i], i)
+  }
 }
 
 each(names, function(item, indice){
@@ -113,8 +127,11 @@ each(names, function(item, indice){
 
  //Code Here
 function getUserById(users, id, cbFunc) {
-  let user = users.filter(person => person.id === id);
-  user.length ? cbFunc(user[0]) : console.log('oops, no user with that id');
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id === id) {
+      cbFunc(users[i])
+    }
+  }
 }
 
 
